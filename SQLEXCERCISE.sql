@@ -133,7 +133,7 @@ select CrimeID,name,'Suspect' as role,age from Suspect where CrimeID in (select 
 select IncidentType, count(*) as NumberOfCases from crime where status = 'Open' group by IncidentType having Count(*) > 1;
 
 --13. List all incidents with suspects whose names also appear as victims in other incidents.
-select * from crime where CrimeID in (select S.CrimeID from Suspect S inner join Victim V on S.Name = V.Name)
+select c.CrimeID,Name,IncidentType,IncidentDate,Location,c.Description,Status from crime c inner join Suspect s on c.CrimeID = s.CrimeID  where s.CrimeID in (select S.CrimeID from Suspect S inner join Victim V on S.Name = V.Name)
 
 --14. Retrieve all incidents along with victim and suspect details.
 select C.CrimeID,C.IncidentType,C.IncidentDate,S.SuspectID,S.Name,S.CriminalHistory,S.Description,V.VictimID,V.Name,V.Injuries,V.ContactInfo
